@@ -45,9 +45,7 @@ def create_dataset_from_tf_record_files(input_file_pattern,
       raise ValueError("Pre-batch ({}) size is not equal to batch "
                        "size ({})".format(pre_batch_size, batch_size))
     files_dataset = files_dataset.shard(NUM_SHARDS, shard_index)
-    dataset = files_dataset.interleave(
-        tf.data.TFRecordDataset,
-        num_parallel_calls=tf.data.experimental.AUTOTUNE)
+    dataset = files_dataset.interleave(tf.data.TFRecordDataset)
     decode_fn = functools.partial(
         data_pipeline.DatasetManager.deserialize,
         batch_size=pre_batch_size,
