@@ -20,7 +20,7 @@ from __future__ import division
 from __future__ import print_function
 
 import tensorflow as tf
-
+from tf1_tf2_compat_functions import tf_gfile
 
 def int64_feature(value):
   return tf.train.Feature(int64_list=tf.train.Int64List(value=[value]))
@@ -59,7 +59,7 @@ def read_examples_list(path):
   Returns:
     list of example identifiers (strings).
   """
-  with tf.gfile.GFile(path) as fid:
+  with tf_gfile.GFile(path) as fid:
     lines = fid.readlines()
   return [line.strip().split(' ')[0] for line in lines]
 
